@@ -1,7 +1,7 @@
 <img width="463" height="216" alt="image" src="https://github.com/user-attachments/assets/09932a7c-a9b2-4fbb-96cb-6e637880aeef" />
 
 
-# Buckshot Roulette — C++ Edition
+# Buckshot Roulette: C++ Edition
 
 > A game about chance. Are you feeling lucky?
 
