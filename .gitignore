@@ -1,0 +1,13 @@
+# Compiler output
+/output/
+*.exe
+*.out
+*.o
+*.obj
+*.pdb
+*.ilk
+
+# Build directories
+/build/
+/Debug/
+/Release/
