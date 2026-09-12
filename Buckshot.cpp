@@ -130,6 +130,15 @@ string SignWaiver()
         cin >> waiver;
     }
 
+   if (waiver == "lucifer" || waiver == "Lucifer")
+{
+    cout << "\nYou've been here before! Welcome back.\n";
+    cout << "\nYou've been eliminated. Try again!";
+    cin >> waiver;
+    // Game end upon this cin statement ;) 
+    return 0;
+}
+
     return waiver;
 }
 
