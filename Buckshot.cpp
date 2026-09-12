@@ -1,16 +1,18 @@
 // Josh Jovovich
 // Professor Fowler
-// 9/11/26
+// 9/11/26 (Begin), Last Amended: 
 // Homework Assignment 1: Personalized C++ Program with Arrays, Functions, and Dynamic Memory
 
 // BUCKSHOT ROULETTE
 // Based on one of my favorite games, developed by Mike Klubnika.
 // A game about chance. Are you feeling lucky?
 // https://github.com/RxFaction
+// https://store.steampowered.com/app/2835570/Buckshot_Roulette/
+// ^^^ Please play it :) ^^^
 
 #include <iostream>
 #include <string>
-
+#include <limits>
 
 using namespace std;
 
@@ -18,6 +20,9 @@ using namespace std;
 void ProgramGreeting();
 string SignWaiver();
 void ShowRules();
+int GetMenuChoice();
+void PlayGame();
+void ShowSessionStats();
 
 int main()
 {
@@ -29,6 +34,33 @@ int main()
          << ". Now we can begin. May the odds ever be in your favor.\n";
 
     ShowRules();
+
+    int menuChoice;
+
+    do
+    {
+        menuChoice = GetMenuChoice();
+        switch (menuChoice)
+        {
+            case 1:
+            PlayGame();
+            break;
+
+            case 2:
+            ShowRules();
+            break;
+
+            case 3:
+            ShowSessionStats();
+            break;
+
+            case 4:
+            cout << "\nLeaving already " << waiver << "? The Dealer will remember your fear.\n";
+            break;
+        }
+    }
+
+    while (menuChoice != 4);
 
     return 0;
 }
@@ -104,6 +136,49 @@ void ShowRules()
           << "GOAL:\n"
           << " Clear the shotgun, survive, and reduce\n"
           << " the Dealer's HP to 0 to win.\n\n"
-          << " Simple. Right?\n\n"
-          << "=================================================\n\n";
+          << " Simple. Right?\n\n";
 }
+
+int GetMenuChoice()
+{
+    int choice;
+
+    cout << "\n========== THE DEALER'S TABLE ==========\n"
+         << "1. Play\n"
+         << "2. View Rules\n"
+         << "3. View Session Statistics\n"
+         << "4. Quit\n"
+         << "========================================\n";
+
+    while (true)
+    {
+        cout << "\nChoose an option (1-4): ";
+
+        if (!(cin >> choice))
+        {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+            cout << "The Dealer expects a number. Enter 1 through 4.\n";
+        }
+        else if (choice < 1 || choice > 4)
+        {
+            cout << "That option isn't on the table. Enter 1 through 4.\n";
+        }
+        else
+        {
+            return choice;
+        }
+    }
+}
+
+void PlayGame()
+{
+    cout << "\nThe Dealer is preparing the table. Gameplay coming soon.\n";
+}
+
+void ShowSessionStats()
+{
+    cout << "\nNo session statistics yet. Check back after gameplay is added.\n";
+}
+
