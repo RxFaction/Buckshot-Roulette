@@ -15,13 +15,29 @@
 using namespace std;
 
 // Prototypes
-
+void ProgramGreeting();
+string SignWaiver();
+void ShowRules();
 
 int main()
 {
-    string waiver;
+    ProgramGreeting();
 
-    cout << R"(
+    string waiver = SignWaiver();
+
+    cout << "\nWELCOME " << waiver
+         << ". Now we can begin. May the odds ever be in your favor.\n";
+
+    ShowRules();
+
+    return 0;
+}
+
+// Function Definitions
+
+void ProgramGreeting()
+{
+        cout << R"(
  ============================================================
 
   BBBB   U   U   CCCC  K   K   SSSS  H   H   OOO   TTTTT
@@ -46,19 +62,30 @@ int main()
  )";
 
     cout << "\nAre you feeling lucky?\n";
-    cout << "\nFirst, you must sign our waiver to play. Enter your name: \n";
-    
+}
+
+string SignWaiver()
+{
+    string waiver;
+
+    cout << "\nFirst, you must sign our waiver to play. Enter your name:\n";
     cin >> waiver;
+
     while (waiver == "god" || waiver == "God")
     {
         cout << "\nA blood soaked waiver appears, signed 'God'.\n";
         cout << "God played already, and lost.\n";
         cout << "\nEaster egg found! Good work.\n";
-        cout << "\nChoose a different name: " << "\n";
+        cout << "\nChoose a different name:\n";
+
         cin >> waiver;
     }
 
-    cout << "\nWELCOME " << waiver <<". " << "Now we can begin. May the odds ever be in your favor.\n";
+    return waiver;
+}
+
+void ShowRules()
+{
     cout << "\nHere are the rules. Read them very carefully, your survival depends on it.\n";
 
     cout  << "\nRULES:\n"
@@ -78,9 +105,4 @@ int main()
           << " the Dealer's HP to 0 to win.\n\n"
           << " Simple. Right?\n\n"
           << "=================================================\n\n";
-
-    return 0;
 }
-
-// Function Definitions
-
