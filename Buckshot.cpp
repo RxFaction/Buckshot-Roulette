@@ -6,6 +6,9 @@
 // BUCKSHOT ROULETTE
 // Based on one of my favorite games, developed by Mike Klubnika.
 // A game about chance. Are you feeling lucky?
+
+// Play this song when engaging with The Dealer. (increases your luck by 4.8%):
+// https://open.spotify.com/track/5va3Y5yIaEQ0GxESxA8eSy?si=c1a2a2322d364bc2
 // https://github.com/RxFaction
 // https://store.steampowered.com/app/2835570/Buckshot_Roulette/
 // ^^^ Please play it :) ^^^
@@ -30,6 +33,7 @@ int main()
 
     string waiver = SignWaiver();
 
+    cout << "\n=================================================================";
     cout << "\nWELCOME " << waiver
          << ". Now we can begin. May the odds ever be in your favor.\n";
 
@@ -93,20 +97,32 @@ void ProgramGreeting()
  ============================================================
  )";
 
-    cout << "\nAre you feeling lucky?\n";
+    cout << "You're drunk, in a nightclub you've never been to before.\n";
+    cout << " A stranger tells you to go upstairs, and knock on the door.\n";
+    cout << " You enter the room. A repurposed Roulette table sits inside.\n";
+    cout << " A briefcase with 70k in cash is opened in front of you.\n";
+    cout << " A terrifying shadow entity, known only as 'The Dealer' asks you: \n";
+    cout << "\n Are you feeling lucky?\n";
 }
 
 string SignWaiver()
 {
     string waiver;
 
-    cout << "\nFirst, you must sign our waiver to play. Enter your name:\n";
+    cout << "\nFirst, you must sign our General Release of Liability Waiver to play.\n";
+    cout << "\nIt indicates you play this game entirely on your own volition.";
+    cout << "\nThe club will NOT be held liable for any bodily harm caused to you,";
+    cout << "\nup to, and including,";
+    cout << "\nYOUR DEATH.\n";
+    cout << " \nSign your name on the dotted line:\n";
     cin >> waiver;
 
     while (waiver == "god" || waiver == "God")
     {
         cout << "\nA blood soaked waiver appears, signed 'God'.\n";
+        cout << "The Dealer laughs at you.\n";
         cout << "God played already, and lost.\n";
+        cout << "God can't help you here.\n";
         cout << "Are you positive you want to continue?\n";
         cout << "\n*Easter egg found! Good work.*\n";
         cout << "\nChoose a different name:\n";
