@@ -4,7 +4,7 @@
 // Homework Assignment 1: Personalized C++ Program with Arrays, Functions, and Dynamic Memory
 
 // BUCKSHOT ROULETTE
-// Based on one of my favorite games, developed by Mike Klubnika.
+// Based on one of my favorite games of all time, developed by Mike Klubnika.
 // A game about chance. Are you feeling lucky?
 
 // Play this song when engaging with The Dealer. (increases your luck by 4.8%):
