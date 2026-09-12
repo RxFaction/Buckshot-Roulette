@@ -75,7 +75,8 @@ string SignWaiver()
     {
         cout << "\nA blood soaked waiver appears, signed 'God'.\n";
         cout << "God played already, and lost.\n";
-        cout << "\nEaster egg found! Good work.\n";
+        cout << "Are you positive you want to continue?\n";
+        cout << "\n*Easter egg found! Good work.*\n";
         cout << "\nChoose a different name:\n";
 
         cin >> waiver;
