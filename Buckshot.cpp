@@ -29,6 +29,7 @@ int GetMenuChoice();
 void PlayGame();
 void ShowSessionStats();
 int RandomNumber(int low, int high);
+int LoadShells(int shells[], int shellCount);
 
 int main()
 {
@@ -102,7 +103,7 @@ void ProgramGreeting()
 
     cout << "You're drunk, in a nightclub you've never been to before.\n";
     cout << " A stranger tells you to go upstairs, and knock on the door.\n";
-    cout << " You enter the room. A repurposed Roulette table sits inside.\n";
+    cout << " You enter the room. A repurposed Roulette table sits inside, with a shotgun on it.\n";
     cout << " A briefcase with 70k in cash is opened in front of you.\n";
     cout << " A terrifying shadow entity, known only as 'The Dealer' asks you: \n";
     cout << "\n Are you feeling lucky?\n";
@@ -193,7 +194,8 @@ int GetMenuChoice()
     }
 }
 
-int RandomNumber (int low, int high))
+// Random number function
+int RandomNumber (int low, int high)
 {
     static bool initialized = false;
 
@@ -206,9 +208,78 @@ int RandomNumber (int low, int high))
     return low + rand() % (high - low + 1);
 }
 
+// Fills and shuffles the shellCount elements of the game
+// shellCount must be >= 2
+int LoadShells(int shells[], int shellCount)
+{
+    const int LIVE = 1;
+    const int BLANK = 0;
+
+    int liveCount = RandomNumber(1, shellCount -1);
+
+    // Fill array
+    for (int i = 0; i < shellCount; i++)
+    {
+        if (i < liveCount)
+        {
+            shells[i] = LIVE;
+        }
+        else
+        {
+            shells[i] - BLANK;
+        }
+    }
+
+    // Shuffle by swapping each position with a random pos from 0 to i
+    for (int i = shellCount - 1; i > 0; i--)
+    {
+        int randomIndex = RandomNumber(0, i);
+
+        int temp = shells[i];
+        shells[i] = shells[randomIndex];
+        shells[randomIndex] = temp;
+    }
+
+    return liveCount;
+}
+
 void PlayGame()
 {
-    cout << "\nThe Dealer is preparing the table. Gameplay coming soon.\n";
+    const int MIN_HEALTH = 2;
+    const int MAX_HEALTH = 4;
+
+    int startingHealth = RandomNumber(MIN_HEALTH, MAX_HEALTH);
+
+    int playerHealth = startingHealth;
+    int dealerHealth = startingHealth;
+
+    cout << "\nThe dealer slides two defibrillators onto the table, and hands you one.\n";
+    cout << "\"Equal chances. See? I play fair.\"\n";
+
+    cout << "\nYour health: " << playerHealth << '\n';
+    cout << "Dealer health: " << dealerHealth << '\n';
+
+    const int MIN_SHELLS = 2;
+    const int MAX_SHELLS = 8;
+
+    int shellCount = RandomNumber(MIN_SHELLS, MAX_SHELLS);
+
+    // Allocate enough space for this load
+    int* shells = new int[shellCount];
+
+    int liveCount = LoadShells(shells, shellCount);
+    int blankCount = shellCount - liveCount;
+
+    cout << "\nThe dealer places shells on the table.\n";
+    cout << "LIVE shells: "  << liveCount << '\n';
+    cout << "BLANK shells: " << blankCount << '\n';
+    cout << "Total shells: " << shellCount << '\n';
+
+    cout << "\nThe Dealer loads the shells into the shotgun, in a random order.";
+    cout << "\nNeither The Dealer, nor you, is aware of the load order.";
+
+    // Release array
+    delete[] shells;
 }
 
 void ShowSessionStats()
