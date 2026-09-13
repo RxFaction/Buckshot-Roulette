@@ -117,7 +117,7 @@ string SignWaiver()
     cout << " \nSign your name on the dotted line:\n";
     cin >> waiver;
 
-    while (waiver == "god" || waiver == "God")
+    while (waiver == "god" || waiver == "God" || waiver == "GOD")
     {
         cout << "\nA blood soaked waiver appears, signed 'God'.\n";
         cout << "The Dealer laughs at you.\n";
@@ -128,18 +128,11 @@ string SignWaiver()
         cout << "\nChoose a different name:\n";
 
         cin >> waiver;
+
     }
 
-   if (waiver == "lucifer" || waiver == "Lucifer")
-{
-    cout << "\nYou've been here before! Welcome back.\n";
-    cout << "\nYou've been eliminated. Try again!";
-    cin >> waiver;
-    // Game end upon this cin statement ;) 
-    return 0;
-}
-
     return waiver;
+
 }
 
 void ShowRules()
