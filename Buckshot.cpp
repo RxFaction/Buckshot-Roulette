@@ -226,11 +226,11 @@ int LoadShells(int shells[], int shellCount)
         }
         else
         {
-            shells[i] - BLANK;
+            shells[i] = BLANK;
         }
     }
 
-    // Shuffle by swapping each position with a random pos from 0 to i
+    // Shuffle array by swapping each position with a random pos from 0 to i
     for (int i = shellCount - 1; i > 0; i--)
     {
         int randomIndex = RandomNumber(0, i);
