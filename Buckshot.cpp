@@ -16,6 +16,8 @@
 #include <iostream>
 #include <string>
 #include <limits>
+#include <cstdlib> // rand() and srand()
+#include <ctime> // time() 
 
 using namespace std;
 
@@ -26,6 +28,7 @@ void ShowRules();
 int GetMenuChoice();
 void PlayGame();
 void ShowSessionStats();
+int RandomNumber(int low, int high);
 
 int main()
 {
@@ -188,6 +191,19 @@ int GetMenuChoice()
             return choice;
         }
     }
+}
+
+int RandomNumber (int low, int high))
+{
+    static bool initialized = false;
+
+    if (!initialized)
+    {
+        srand(static_cast<unsigned int>(time(nullptr)));
+        initialized = true;
+    }
+
+    return low + rand() % (high - low + 1);
 }
 
 void PlayGame()
