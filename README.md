@@ -11,9 +11,11 @@ A simple, terminal-based adaptation of Mike Klubnika's **Buckshot Roulette**, de
 
 ## Development Status
 
-The core gameplay loop is implemented and playable. After the ASCII title screen and name-entry waiver (including a small Easter egg), the main menu lets you play, review the rules, view the session statistics placeholder, or quit.
+The core gameplay loop is implemented and fully playable. After the ASCII title screen and name entry waiver (including a small Easter egg!), the main menu lets you play, review the rules, view the session statistics, or quit.
 
-Games now include randomized health and shell loading, player and Dealer turns, health tracking, automatic reloads, and win/loss outcomes. After a game ends, you return to the main menu and can play again. Session statistics are not yet implemented.
+Games include randomized health and shell loading, player and Dealer turns, health tracking, automatic reloads, session stat tracking, and win/loss outcomes. After a game ends, you return to the main menu and can play again.
+
+Going forward, I would eventually like to add the "Double or Nothing" mode, with items. 
 
 ## Rules
 

@@ -41,6 +41,7 @@ int GetShotChoice();
 void ShowReportRow(string label, int value);
 void ShowReportRow(string label, string value);
 void ShowMatchResults(int playerHealth, int dealerHealth);
+bool AskPlayAgain();
 
 // MAIN FUNCTION
 int main()
@@ -66,7 +67,11 @@ int main()
         switch (menuChoice)
         {
             case 1:
-            PlayGame(sessionStats);
+            do
+            {
+                PlayGame(sessionStats);
+            } 
+            while (cin && AskPlayAgain());
             break;
 
             case 2:
@@ -552,4 +557,32 @@ void ShowMatchResults(int playerHealth, int dealerHealth)
     ShowReportRow("Dealer remaining health", dealerHealth);
 
     cout << "+----------------------------+------------+\n";
+}
+
+// Returns true to play again, or false to return back to the menu
+bool AskPlayAgain()
+{
+    string answer;
+    
+    while (true)
+    {
+        cout << "\nThe table is cleared, and ready for another match.\n";
+        cout << "Play again? (Y = another match, N = main menu): ";
+
+        if (!(cin >> answer))
+        {
+            return false;
+        }
+
+        if (answer == "y" || answer == "Y")
+        {
+            return true;
+        }
+        else if (answer == "n" || answer == "N")
+        {
+            return false;
+        }
+
+        cout << "\nEnter Y or N. Sober up, the Dealer needs a clearer answer.\n";
+    }
 }
