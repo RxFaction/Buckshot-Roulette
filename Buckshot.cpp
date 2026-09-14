@@ -17,7 +17,8 @@
 #include <string>
 #include <limits>
 #include <cstdlib> // rand() and srand()
-#include <ctime> // time() 
+#include <ctime> // time()
+#include <iomanip> 
 
 using namespace std;
 
@@ -26,8 +27,8 @@ void ProgramGreeting();
 string SignWaiver();
 void ShowRules();
 int GetMenuChoice();
-void PlayGame();
-void ShowSessionStats();
+void PlayGame(int sessionStats[]);
+void ShowSessionStats(const int sessionStats[], int statCount);
 int RandomNumber(int low, int high);
 int LoadShells(int shells[], int shellCount);
 int GetShotChoice();
@@ -44,6 +45,9 @@ int main()
 
     ShowRules();
 
+    const int STAT_COUNT = 5;
+    int sessionStats[STAT_COUNT] = {};
+    
     int menuChoice;
 
     do
@@ -52,7 +56,7 @@ int main()
         switch (menuChoice)
         {
             case 1:
-            PlayGame();
+            PlayGame(sessionStats);
             break;
 
             case 2:
@@ -60,7 +64,7 @@ int main()
             break;
 
             case 3:
-            ShowSessionStats();
+            ShowSessionStats(sessionStats, STAT_COUNT);
             break;
 
             case 4:
@@ -107,7 +111,7 @@ void ProgramGreeting()
     cout << " You enter the room. A repurposed Roulette table sits inside, with a shotgun on it.\n";
     cout << " A briefcase with 70k in cash is opened in front of you.\n";
     cout << " A terrifying shadow entity, known only as 'The Dealer' asks you: \n";
-    cout << "\n Are you feeling lucky?\n";
+    cout << "\n \"Are you feeling lucky?\"\n";
 }
 
 string SignWaiver()
@@ -161,6 +165,12 @@ void ShowRules()
           << " the Dealer's HP to 0 to win.\n\n"
           << " Simple. Right?\n\n";
 }
+
+const int STAT_COUNT = 5;
+
+// Index 0 = completed matches, 1 = player wins, 2 = dealer wins, 
+// 3 = live shots, 4 = blank shots
+int sessionStats[STAT_COUNT] = {};
 
 int GetMenuChoice()
 {
@@ -279,8 +289,14 @@ int GetShotChoice()
     }
 }
 
-void PlayGame()
+void PlayGame(int sessionStats[])
 {
+    const int MATCHES_COMPLETED = 0;
+    const int PLAYER_WINS = 1;
+    const int DEALER_WINS = 2;
+    const int LIVE_SHOTS = 3;
+    const int BLANK_SHOTS = 4;
+    
     const int MIN_HEALTH = 2;
     const int MAX_HEALTH = 4;
     const int MIN_SHELLS = 2;
@@ -365,6 +381,8 @@ void PlayGame()
 
             if (liveShell)
             {
+                sessionStats[LIVE_SHOTS]++;
+
                 cout << "BANG! A live shell. One health point lost.\n";
 
                 if (playerTurn)
@@ -410,6 +428,8 @@ void PlayGame()
             }
             else
             {
+                sessionStats[BLANK_SHOTS]++;
+
                 cout << "Click! A blank.\n";
             }
 
@@ -440,16 +460,46 @@ void PlayGame()
 
     if (playerHealth > 0)
     {
+        sessionStats[PLAYER_WINS]++;
+        sessionStats[MATCHES_COMPLETED]++;
+
         cout << "\nThe Dealer falls. You survived. You are handed the briefcase full of cash.\n";
     }
     else
     {
+        sessionStats[DEALER_WINS]++;
+        sessionStats[MATCHES_COMPLETED]++;
+
         cout << "\nEverything goes dark. The Dealer wins.\n";
     }
 }
 
-void ShowSessionStats()
+void ShowSessionStats(const int sessionStats[], int statCount)
 {
-    cout << "\nNo session statistics yet. Check back after gameplay is added.\n";
+    const string labels[] = 
+    {
+        "Matches completed",
+        "Player wins",
+        "Dealer wins",
+        "Live shells fired",
+        "Blank shells fired"
+    };
+
+    cout << "\nTHE DEALER'S LEDGER\n";
+    cout << "Session totals since the program started.\n\n";
+
+    cout << "+----------------------------+------------+\n";
+    cout << "| " << left << setw(26) << "Statistic"
+         << " | " << right << setw(10) << "Total" << " |\n";
+    cout << "+----------------------------+------------+\n";
+
+    for (int i = 0; i < statCount; i++)
+    {
+        cout << "| " << left << setw(26) << labels[i]
+             << " | " << right << setw(10) << sessionStats[i]
+             << " |\n";
+    }
+
+    cout << "+----------------------------+------------+\n";
 }
 
