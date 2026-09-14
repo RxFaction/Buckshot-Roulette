@@ -307,16 +307,21 @@ void PlayGame()
         int blankCount = shellCount - liveCount;
 
         cout << "\nThe dealer places shells on the table.\n";
-        cout << "LIVE shells: "  << liveCount << '\n';
+        cout << "LIVE shells: " << liveCount << '\n';
         cout << "BLANK shells: " << blankCount << '\n';
         cout << "Total shells: " << shellCount << '\n';
 
+        cout << "\nThe Dealer loads the shells into the shotgun, in a random order.\n";
+        cout << "Neither The Dealer, nor you, is aware of the load order.\n";
+
         int shellIndex = 0;
 
-        // Play thru the current load, stopping when someone loses (health @ 0)
-        while (shellIndex < shellCount && playerHealth > 0 && dealerHealth > 0)
+        // Play through this load until it empties or someone loses
+        while (shellIndex < shellCount &&
+               playerHealth > 0 && dealerHealth > 0)
         {
-            cout << "\nYour health: " << playerHealth << " | Dealer health: " << dealerHealth << '\n';
+            cout << "\nYour health: " << playerHealth
+                 << " | Dealer health: " << dealerHealth << '\n';
 
             int choice;
 
@@ -331,14 +336,13 @@ void PlayGame()
                     break;
                 }
             }
-
             else
             {
                 cout << "\nThe dealer takes the shotgun.\n";
                 choice = RandomNumber(1, 2);
             }
 
-            // For both player and dealer, 1 is shoot other, 2 is shoot yourself
+            // 1 means shoot the opponent and 2 means shoot yourself
             bool shootSelf = (choice == 2);
             bool liveShell = (shells[shellIndex] == LIVE);
 
@@ -351,7 +355,6 @@ void PlayGame()
                 else
                     cout << "You aim at the dealer.\n";
             }
-
             else
             {
                 if (shootSelf)
@@ -362,7 +365,7 @@ void PlayGame()
 
             if (liveShell)
             {
-                cout << "BANG! A live shell. You slam to the floor. One health point lost.\n";
+                cout << "BANG! A live shell. One health point lost.\n";
 
                 if (playerTurn)
                 {
@@ -374,18 +377,16 @@ void PlayGame()
                             cout << "Your defibrillator is used to revive you. Get back in the game.\n";
 
                         if (playerHealth == 1)
-                        {
                             cout << "The Dealer leans forward. \"Careful now...\"\n";
-                        }
                     }
-
-                    else 
+                    else
                     {
+                        dealerHealth--;
+
                         if (dealerHealth > 0)
                             cout << "The Dealer's defibrillator is used to revive him.\n";
                     }
                 }
-
                 else
                 {
                     if (shootSelf)
@@ -395,7 +396,6 @@ void PlayGame()
                         if (dealerHealth > 0)
                             cout << "The Dealer's defibrillator is used to revive him.\n";
                     }
-
                     else
                     {
                         playerHealth--;
@@ -404,32 +404,48 @@ void PlayGame()
                             cout << "Your defibrillator is used to revive you. Get back in the game.\n";
 
                         if (playerHealth == 1)
-                        {
                             cout << "The Dealer leans forward. \"Careful now...\"\n";
-                        }
                     }
                 }
             }
+            else
+            {
+                cout << "Click! A blank.\n";
+            }
+
+            // Keep the turn only for a blank aimed at yourself
+            if (shootSelf && !liveShell)
+            {
+                cout << "Take another turn.\n";
+            }
+            else
+            {
+                playerTurn = !playerTurn;
+            }
+        }
+
+        // Release this array before reloading or leaving the game
+        delete[] shells;
+
+        if (inputEnded)
+        {
+            return;
+        }
+
+        if (playerHealth > 0 && dealerHealth > 0)
+        {
+            cout << "\nEmpty. The Dealer reaches for another load.\n";
         }
     }
 
-    
-
-    int shellCount = RandomNumber(MIN_SHELLS, MAX_SHELLS);
-
-    // Allocate enough space for this load
-    int* shells = new int[shellCount];
-
-    int liveCount = LoadShells(shells, shellCount);
-    int blankCount = shellCount - liveCount;
-
-   
-
-    cout << "\nThe Dealer loads the shells into the shotgun, in a random order.";
-    cout << "\nNeither The Dealer, nor you, is aware of the load order.";
-
-    // Release array
-    delete[] shells;
+    if (playerHealth > 0)
+    {
+        cout << "\nThe Dealer falls. You survived. You are handed the briefcase full of cash.\n";
+    }
+    else
+    {
+        cout << "\nEverything goes dark. The Dealer wins.\n";
+    }
 }
 
 void ShowSessionStats()
