@@ -159,7 +159,6 @@ string SignWaiver()
     }
 
     return waiver;
-
 }
 
 // Output of the rules for Buckshot Roulette
@@ -210,7 +209,7 @@ int GetMenuChoice()
             return 4;
         }
 
-        // Input validation for this
+        // Input validation for this input
         if (choice == "1")
             return 1;
         else if (choice == "2")
@@ -480,7 +479,7 @@ void PlayGame(int sessionStats[])
         sessionStats[PLAYER_WINS]++;
         sessionStats[MATCHES_COMPLETED]++;
 
-        cout << "\nThe Dealer falls. You survived. You are handed the briefcase full of cash.\n";
+        cout << "\nThe Dealer falls. You survived. You are handed the briefcase full of cash!\n";
     }
     else
     {
@@ -567,9 +566,10 @@ bool AskPlayAgain()
     
     while (true)
     {
-        cout << "\nThe table is cleared, and ready for another match.\n";
+        cout << "\nThe table has been cleared, and ready for another match.\n";
         cout << "Play again? (Y = another match, N = main menu): ";
 
+        // Input validation
         if (!(cin >> answer))
         {
             return false;
