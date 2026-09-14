@@ -11,17 +11,19 @@ A simple, terminal-based adaptation of Mike Klubnika's **Buckshot Roulette**, de
 
 ## Development Status
 
-This project is a work in progress. The current version displays an ASCII title screen, asks you to sign a waiver, welcomes you by name, and explains the rules. It also includes a small name-entry Easter egg.
+The core gameplay loop is implemented and playable. After the ASCII title screen and name-entry waiver (including a small Easter egg), the main menu lets you play, review the rules, view the session statistics placeholder, or quit.
 
-The playable turn system, randomized shell loading, health tracking, and Dealer behavior are still to be implemented. The rules below describe the intended game.
+Games now include randomized health and shell loading, player and Dealer turns, health tracking, automatic reloads, and win/loss outcomes. After a game ends, you return to the main menu and can play again. Session statistics are not yet implemented.
 
 ## Rules
 
-At the start of each round:
+At the start of each game, you and the Dealer receive the same randomized starting health of **2–4 HP**. You take the first turn.
 
-- The Dealer loads a shotgun with a known number of **live** and **blank** shells.
+For each load:
+
+- The Dealer loads **2–8 shells**, with at least one **live** shell and one **blank**.
+- The live and blank counts are shown before play begins with that load.
 - The shell order is randomized. You know the counts, but not what comes next.
-- Starting health is randomized for the round.
 
 On your turn, choose to **shoot the Dealer** or **shoot yourself**:
 
@@ -32,9 +34,19 @@ On your turn, choose to **shoot the Dealer** or **shoot yourself**:
 | Shoot yourself | Live | You take 1 damage | Your turn ends |
 | Shoot yourself | Blank | No damage | You take another turn |
 
-**The goal:** clear the shotgun, survive, and reduce the Dealer's HP to **0** to win.
+The Dealer randomly chooses whether to shoot you or himself and follows the same damage and turn rules. Health is displayed before each shot.
+
+When the shotgun empties and both participants are still alive, it is reloaded. Health and whose turn is next carry over, health is only reset when you start a new game.
+
+**The goal:** reduce the Dealer's HP to **0** before yours reaches **0**. The game ends as soon as either participant runs out of health.
 
 There are no items or inventory mechanics in this adaptation.
+
+## Controls
+
+- **Main menu:** enter `1` to play, `2` to view the rules, `3` to view the session statistics placeholder, or `4` to quit.
+- **Your turn:** enter `1` to shoot the Dealer or `2` to shoot yourself.
+- Confirm each entry with **Enter**. Invalid menu and target choices prompt you to try again.
 
 ## Running the Program
 
@@ -49,7 +61,8 @@ The project is shared as C++ source code. Your development environment handles c
 
 ## Project Layout
 
-Buckshot.cpp   Main program: title screen, waiver, and rules
+```text
+Buckshot.cpp   Main program: intro, menus, rules, and core gameplay loop
 README.md      Project overview and build instructions
 LICENSE        MIT license
 ```
