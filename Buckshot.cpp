@@ -1,6 +1,4 @@
-// Josh Jovovich
-// Professor Fowler
-// 9/11/26 (Begin), Last Amended: 
+// RxFaction
 // Homework Assignment 1: Personalized C++ Program with Arrays, Functions, and Dynamic Memory
 
 // Program description:
@@ -115,7 +113,7 @@ void ProgramGreeting()
 
                [ LIVE ]          [ BLANK ]
 
-            C++ Adaptation by Josh Jovovich
+            C++ Adaptation by RxFaction
              Original game by Mike Klubnika
                  A game about chance.
 
