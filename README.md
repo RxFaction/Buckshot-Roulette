@@ -71,7 +71,7 @@ LICENSE        MIT license
 
 ## Credits and License
 
-- **C++ adaptation:** Josh Jovovich (RxFaction)
+- **C++ adaptation:** RxFaction
 - **Original game and inspiration:** Buckshot Roulette by Mike Klubnika
 
 This is an unofficial learning project, developed to practice C++ with arrays, functions, and dynamic memory as the game takes shape.
