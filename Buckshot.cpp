@@ -3,6 +3,12 @@
 // 9/11/26 (Begin), Last Amended: 
 // Homework Assignment 1: Personalized C++ Program with Arrays, Functions, and Dynamic Memory
 
+// Program description:
+// A terminal based adaptation of Buckshot Roulette where the player faces
+// a computer controlled Dealer using randomized live and blank shells.
+// The program manages health, dynamically allocated shell loads,
+// and cumulative session statistics through a validated menu.
+
 // BUCKSHOT ROULETTE
 // Based on one of my favorite games of all time, developed by Mike Klubnika.
 // A game about chance. Are you feeling lucky?
@@ -18,11 +24,11 @@
 #include <limits>
 #include <cstdlib> // rand() and srand()
 #include <ctime> // time()
-#include <iomanip> 
+#include <iomanip> // setw
 
 using namespace std;
 
-// Prototypes
+// PROTOTYPES
 void ProgramGreeting();
 string SignWaiver();
 void ShowRules();
@@ -33,6 +39,7 @@ int RandomNumber(int low, int high);
 int LoadShells(int shells[], int shellCount);
 int GetShotChoice();
 
+// MAIN FUNCTION
 int main()
 {
     ProgramGreeting();
@@ -78,8 +85,9 @@ int main()
     return 0;
 }
 
-// Function Definitions
+// FUNCTION DEFINITIONS
 
+// The greeting for the game
 void ProgramGreeting()
 {
         cout << R"(
@@ -114,6 +122,7 @@ void ProgramGreeting()
     cout << "\n \"Are you feeling lucky?\"\n";
 }
 
+// Sign waiver text output and waiver input capture
 string SignWaiver()
 {
     string waiver;
@@ -126,6 +135,7 @@ string SignWaiver()
     cout << " \nSign your name on the dotted line:\n";
     cin >> waiver;
 
+    // Easter egg!! Referencing the same Easter egg in the OG game
     while (waiver == "god" || waiver == "God" || waiver == "GOD")
     {
         cout << "\nA blood soaked waiver appears, signed 'God'.\n";
@@ -144,6 +154,7 @@ string SignWaiver()
 
 }
 
+// Output of the rules for Buckshot Roulette
 void ShowRules()
 {
     cout << "\nHere are the rules. Read them very carefully, your survival depends on it.\n";
@@ -166,12 +177,7 @@ void ShowRules()
           << " Simple. Right?\n\n";
 }
 
-const int STAT_COUNT = 5;
-
-// Index 0 = completed matches, 1 = player wins, 2 = dealer wins, 
-// 3 = live shots, 4 = blank shots
-int sessionStats[STAT_COUNT] = {};
-
+// Available user choices for the game
 int GetMenuChoice()
 {
     int choice;
@@ -289,6 +295,8 @@ int GetShotChoice()
     }
 }
 
+
+// Core game logic loop
 void PlayGame(int sessionStats[])
 {
     const int MATCHES_COMPLETED = 0;
@@ -474,6 +482,7 @@ void PlayGame(int sessionStats[])
     }
 }
 
+// Current session stats
 void ShowSessionStats(const int sessionStats[], int statCount)
 {
     const string labels[] = 
@@ -502,4 +511,3 @@ void ShowSessionStats(const int sessionStats[], int statCount)
 
     cout << "+----------------------------+------------+\n";
 }
-
