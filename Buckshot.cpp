@@ -30,6 +30,7 @@ void PlayGame();
 void ShowSessionStats();
 int RandomNumber(int low, int high);
 int LoadShells(int shells[], int shellCount);
+int GetShotChoice();
 
 int main()
 {
@@ -178,6 +179,10 @@ int GetMenuChoice()
 
         if (!(cin >> choice))
         {
+            if (cin.eof())
+            {
+                return 4;
+            }
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
@@ -243,24 +248,172 @@ int LoadShells(int shells[], int shellCount)
     return liveCount;
 }
 
+// Returns 1 for shooting the dealer or 2 for shooting yourself
+// Returns 0 if the input stream terminates
+int GetShotChoice()
+{
+    string choice;
+
+    while (true)
+    {
+        cout << "\n1. Shoot the Dealer\n"
+             << "2. Shoot yourself\n"
+             <<"Choose your target: ";
+
+        if (!(cin >> choice))
+        {
+            return 0;
+        }
+
+        if (choice == "1")
+        {
+            return 1;
+        }
+
+        if (choice == "2")
+        {
+            return 2;
+        }
+
+        cout << "\nThe Dealer grows impatient with you. Enter 1 or 2.";
+    }
+}
+
 void PlayGame()
 {
     const int MIN_HEALTH = 2;
     const int MAX_HEALTH = 4;
+    const int MIN_SHELLS = 2;
+    const int MAX_SHELLS = 8;
+    const int LIVE = 1;
 
     int startingHealth = RandomNumber(MIN_HEALTH, MAX_HEALTH);
-
     int playerHealth = startingHealth;
     int dealerHealth = startingHealth;
+
+    bool playerTurn = true;
+    bool inputEnded = false;
 
     cout << "\nThe dealer slides two defibrillators onto the table, and hands you one.\n";
     cout << "\"Equal chances. See? I play fair.\"\n";
 
-    cout << "\nYour health: " << playerHealth << '\n';
-    cout << "Dealer health: " << dealerHealth << '\n';
+    // Load shells until someone loses
+    while (playerHealth > 0 && dealerHealth > 0)
+    {
+        int shellCount = RandomNumber(MIN_SHELLS, MAX_SHELLS);
+        int* shells = new int[shellCount];
 
-    const int MIN_SHELLS = 2;
-    const int MAX_SHELLS = 8;
+        int liveCount = LoadShells(shells, shellCount);
+        int blankCount = shellCount - liveCount;
+
+        cout << "\nThe dealer places shells on the table.\n";
+        cout << "LIVE shells: "  << liveCount << '\n';
+        cout << "BLANK shells: " << blankCount << '\n';
+        cout << "Total shells: " << shellCount << '\n';
+
+        int shellIndex = 0;
+
+        // Play thru the current load, stopping when someone loses (health @ 0)
+        while (shellIndex < shellCount && playerHealth > 0 && dealerHealth > 0)
+        {
+            cout << "\nYour health: " << playerHealth << " | Dealer health: " << dealerHealth << '\n';
+
+            int choice;
+
+            if (playerTurn)
+            {
+                cout << "\nYour turn.\n";
+                choice = GetShotChoice();
+
+                if (choice == 0)
+                {
+                    inputEnded = true;
+                    break;
+                }
+            }
+
+            else
+            {
+                cout << "\nThe dealer takes the shotgun.\n";
+                choice = RandomNumber(1, 2);
+            }
+
+            // For both player and dealer, 1 is shoot other, 2 is shoot yourself
+            bool shootSelf = (choice == 2);
+            bool liveShell = (shells[shellIndex] == LIVE);
+
+            shellIndex++;
+
+            if (playerTurn)
+            {
+                if (shootSelf)
+                    cout << "You aim at yourself.\n";
+                else
+                    cout << "You aim at the dealer.\n";
+            }
+
+            else
+            {
+                if (shootSelf)
+                    cout << "The Dealer aims at himself.\n";
+                else
+                    cout << "The Dealer aims at you.\n";
+            }
+
+            if (liveShell)
+            {
+                cout << "BANG! A live shell. You slam to the floor. One health point lost.\n";
+
+                if (playerTurn)
+                {
+                    if (shootSelf)
+                    {
+                        playerHealth--;
+
+                        if (playerHealth > 0)
+                            cout << "Your defibrillator is used to revive you. Get back in the game.\n";
+
+                        if (playerHealth == 1)
+                        {
+                            cout << "The Dealer leans forward. \"Careful now...\"\n";
+                        }
+                    }
+
+                    else 
+                    {
+                        if (dealerHealth > 0)
+                            cout << "The Dealer's defibrillator is used to revive him.\n";
+                    }
+                }
+
+                else
+                {
+                    if (shootSelf)
+                    {
+                        dealerHealth--;
+
+                        if (dealerHealth > 0)
+                            cout << "The Dealer's defibrillator is used to revive him.\n";
+                    }
+
+                    else
+                    {
+                        playerHealth--;
+
+                        if (playerHealth > 0)
+                            cout << "Your defibrillator is used to revive you. Get back in the game.\n";
+
+                        if (playerHealth == 1)
+                        {
+                            cout << "The Dealer leans forward. \"Careful now...\"\n";
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    
 
     int shellCount = RandomNumber(MIN_SHELLS, MAX_SHELLS);
 
@@ -270,10 +423,7 @@ void PlayGame()
     int liveCount = LoadShells(shells, shellCount);
     int blankCount = shellCount - liveCount;
 
-    cout << "\nThe dealer places shells on the table.\n";
-    cout << "LIVE shells: "  << liveCount << '\n';
-    cout << "BLANK shells: " << blankCount << '\n';
-    cout << "Total shells: " << shellCount << '\n';
+   
 
     cout << "\nThe Dealer loads the shells into the shotgun, in a random order.";
     cout << "\nNeither The Dealer, nor you, is aware of the load order.";
