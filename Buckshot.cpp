@@ -38,6 +38,9 @@ void ShowSessionStats(const int sessionStats[], int statCount);
 int RandomNumber(int low, int high);
 int LoadShells(int shells[], int shellCount);
 int GetShotChoice();
+void ShowReportRow(string label, int value);
+void ShowReportRow(string label, string value);
+void ShowMatchResults(int playerHealth, int dealerHealth);
 
 // MAIN FUNCTION
 int main()
@@ -480,6 +483,8 @@ void PlayGame(int sessionStats[])
 
         cout << "\nEverything goes dark. The Dealer wins.\n";
     }
+
+    ShowMatchResults(playerHealth, dealerHealth);
 }
 
 // Current session stats
@@ -504,10 +509,47 @@ void ShowSessionStats(const int sessionStats[], int statCount)
 
     for (int i = 0; i < statCount; i++)
     {
-        cout << "| " << left << setw(26) << labels[i]
-             << " | " << right << setw(10) << sessionStats[i]
-             << " |\n";
+       ShowReportRow(labels[i], sessionStats[i]);
     }
+
+    cout << "+----------------------------+------------+\n";
+}
+
+// Displays a labeled integer in an aligned and bordered report row
+void ShowReportRow(string label, int value)
+{
+    cout << "| " << left << setw(26) << label << " | " << right << setw(10) << value << " |\n";
+}
+
+// Displays labeled text in the same report format
+void ShowReportRow(string label, string value)
+{
+    cout << "| " << left << setw(26) << label << " | " << right << setw(10) << value << " |\n";
+}
+
+void ShowMatchResults(int playerHealth, int dealerHealth)
+{
+    string winner;
+
+    if (playerHealth > 0)
+    {
+        winner = "Player";
+    }
+    else
+    {
+        winner = "Dealer";
+    }
+
+    cout << "\nTHE FINAL VERDICT\n";
+    cout << "+----------------------------+------------+\n";
+
+    ShowReportRow("Result", string("Value"));
+
+    cout << "+----------------------------+------------+\n";
+
+    ShowReportRow("Winner", winner);
+    ShowReportRow("Your remaining health", playerHealth);
+    ShowReportRow("Dealer remaining health", dealerHealth);
 
     cout << "+----------------------------+------------+\n";
 }
