@@ -188,7 +188,11 @@ void ShowRules()
 // Available user choices for the game
 int GetMenuChoice()
 {
-    int choice;
+    // Initially went with an int here, but that made my input validation process 
+    // messy. If the user entered 2abc, it would still show 2 (show rules), but abc was
+    // left to be processed still. I pivoted to a string, and use if and else if statements 
+    // to validate the only 4 accepted inputs
+    string choice;
 
     cout << "\n========== THE DEALER'S TABLE ==========\n"
          << "1. Play\n"
@@ -203,23 +207,20 @@ int GetMenuChoice()
 
         if (!(cin >> choice))
         {
-            if (cin.eof())
-            {
-                return 4;
-            }
-            cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            return 4;
+        }
 
-            cout << "The Dealer expects a number. Enter 1 through 4.\n";
-        }
-        else if (choice < 1 || choice > 4)
-        {
-            cout << "That option isn't on the table. Enter 1 through 4.\n";
-        }
-        else
-        {
-            return choice;
-        }
+        // Input validation for this
+        if (choice == "1")
+            return 1;
+        else if (choice == "2")
+            return 2;
+        else if (choice == "3")
+            return 3;
+        else if (choice == "4")
+            return 4;
+        
+        cout << "\nThe Dealer doesn't accept your choice. Enter 1, 2, 3, or 4.";
     }
 }
 
@@ -583,6 +584,7 @@ bool AskPlayAgain()
             return false;
         }
 
+        // This was a fun reference back to you being drunk when you started, lol
         cout << "\nEnter Y or N. Sober up, the Dealer needs a clearer answer.\n";
     }
 }
