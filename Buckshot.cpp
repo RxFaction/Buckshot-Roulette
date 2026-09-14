@@ -170,7 +170,7 @@ void ShowRules()
           << "1. At the start of each round, the Dealer will load a shotgun\n"
           << "   with a known number of LIVE and BLANK shells.\n"
           << "2. The exact sequence of the shells is randomized.\n"
-          << "3. The starting health will be randomized each round.\n\n"
+          << "3. Both participants start each match with equal, randomized health.\n\n"
           << "ON YOUR TURN, YOU CAN:\n"
           << " - Shoot the Dealer:\n"
           << "   * Live Shell  : Deals 1 damage. Turn ends.\n"
