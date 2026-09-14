@@ -5,7 +5,7 @@
 
 > A game about chance. Are you feeling lucky?
 
-A simple, terminal-based adaptation of Mike Klubnika's **Buckshot Roulette**, developed in C++ by **Josh Jovovich**. Face the Dealer, keep track of the shells, and decide where to aim.
+A simple, terminal-based adaptation of Mike Klubnika's **Buckshot Roulette**, developed in C++ by **RxFaction**. Face the Dealer, keep track of the shells, and decide where to aim.
 
 **No items. Just live shells, blanks, and the choices you make.**
 
